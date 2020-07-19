@@ -33,19 +33,7 @@ class MessengerFragment : Fragment(){
 
     override fun onResume() {
         super.onResume()
-        movieId?.let { movieId ->
-            NetworkProvider.getOpinionsByMovie(idMovie = movieId,listener = object:
-                NetworkListener<List<Comment>> {
-                override fun onSuccess(data: List<Comment>) {
-                    enableStatusChangeListener =data.find { it.userId=="15e7frge3943e4geg48" }.let { true }
-                }
 
-                override fun onError(throwable: Throwable) {
-                    Log.e("Error", throwable.localizedMessage)
-                }
-
-            })
-        }
 
     }
     override fun onCreateView(

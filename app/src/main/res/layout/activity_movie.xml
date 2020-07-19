@@ -40,15 +40,30 @@
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/movie_description"
+                app:layout_constraintBottom_toTopOf="@+id/scroll_movie"
                 app:layout_constraintStart_toStartOf="parent" />
 
 
-            <TextView
-                android:id="@+id/movie_description"
+            <ScrollView
+                android:id="@+id/scroll_movie"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/movie_note" />
+                android:layout_height="60dp"
+                app:layout_constraintTop_toBottomOf="@+id/movie_image">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/movie_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </ScrollView>
+
+
 
             <TextView
                 android:id="@+id/movie_note"
@@ -56,8 +71,9 @@
                 android:layout_height="30dp"
                 android:textSize="@dimen/rating_size"
                 android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/scroll_movie"
                 app:layout_constraintBottom_toTopOf="@+id/btn_create_opinion"
-                app:layout_constraintEnd_toEndOf="@+id/movie_description" />
+                app:layout_constraintEnd_toEndOf="@+id/scroll_movie" />
 
             <Button
                 android:id="@+id/btn_create_opinion"
@@ -82,13 +98,15 @@
             android:text="@string/title_commentaires"
             android:textSize="18sp" />
 
-        <FrameLayout
-            android:id="@+id/frame_fragment"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listMessageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorGreyTransparent">
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_message">
 
-        </FrameLayout>
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
 

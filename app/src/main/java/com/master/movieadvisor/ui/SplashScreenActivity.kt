@@ -1,11 +1,13 @@
 package com.master.movieadvisor.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -22,6 +24,7 @@ class SplashScreenActivity: AppCompatActivity() {
     private lateinit var mLogo : ImageView
     private lateinit var auth: FirebaseAuth
     private val timeout: Long =2500
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeStatusBarTransparent()

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RatingBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,6 +21,7 @@ import com.master.movieadvisor.R
 import com.master.movieadvisor.helpers.SwipeToDeleteCallback
 import com.master.movieadvisor.model.Comment
 import com.master.movieadvisor.model.MessagesViewModel
+import com.master.movieadvisor.model.PostComment
 import com.master.movieadvisor.service.providers.NetworkListener
 import com.master.movieadvisor.service.providers.NetworkProvider
 import com.master.movieadvisor.ui.toEditable
@@ -31,6 +33,8 @@ class HistoryMessageFragment : Fragment() {
     private lateinit var ratingBar: RatingBar
     private lateinit var auth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
+    private lateinit var imageLike: ImageView
+    private lateinit var imageDislike: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +47,12 @@ class HistoryMessageFragment : Fragment() {
         auth = Firebase.auth
         currentUser = auth.currentUser
         currentUser?.let { it ->
-            NetworkProvider.getOpinionsByUser(idUser = "15e7frge3943e4geg48",listener = object:
+            NetworkProvider.getOpinionsByUser(idUser = it.uid,listener = object:
                 NetworkListener<List<Comment>> {
                 override fun onSuccess(data: List<Comment>) {
                     val transformData=data.map {comment->
-                        MessagesViewModel(userName = "greg",rating = comment.rating,movieId = comment.movieId,text = comment.comment,isLiked = comment.like)
+
+                        MessagesViewModel(userName = it.displayName?:"greg",rating = comment.rating,movieId = comment.movieId,text = comment.comment,isLiked = comment.like)
                     }
                     messagesAdapter.listItem=transformData as MutableList<MessagesViewModel>
                 }
@@ -75,6 +80,8 @@ class HistoryMessageFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val pos = viewHolder.adapterPosition
                 messagesAdapter.listItem.removeAt(pos)
+                //messagesAdapter.listItem[pos].
+                deleteComment()
                 messagesAdapter.notifyItemRemoved(pos)
             }
         }
@@ -85,6 +92,10 @@ class HistoryMessageFragment : Fragment() {
 
     }
 
+    private fun deleteComment() {
+        //NetworkProvider.removeComment()
+    }
+
     private fun updateMessage(message: MessagesViewModel) {
         val builder = AlertDialog.Builder(activity,R.style.AlertDialogTheme)
         // Get the layout inflater
@@ -93,7 +104,10 @@ class HistoryMessageFragment : Fragment() {
         ratingBar = view.findViewById(R.id.eval_user)
         commentView.text = message.text.toEditable()
         ratingBar.rating=message.rating.toFloat()
+        imageDislike = view.findViewById(R.id.dislike)
+        imageLike = view.findViewById(R.id.like)
 
+        eventRatingBar()
         builder.setView(view)
             .setTitle(getString(R.string.title_dialog_rating))
             // Add action button
@@ -101,7 +115,10 @@ class HistoryMessageFragment : Fragment() {
             { _, _ ->
                 val comment = commentView.text.toString()
                 val rating = ratingBar.rating.toDouble()
-                //applyRating(rating, comment)
+                val isliked=imageLike.visibility==View.VISIBLE
+                val updateComment= Comment(movieId = 471,rating = rating,comment = comment,userId = currentUser!!.uid,like = isliked,id = 51)
+                applyRating(updateComment)
+
 
             }
             .setNegativeButton(R.string.cancel)
@@ -111,5 +128,36 @@ class HistoryMessageFragment : Fragment() {
 
         builder.create().show()
 
+    }
+    private fun eventRatingBar() {
+        ratingBar.setOnRatingBarChangeListener { _, v, b ->
+
+            when (v>=2.5f) {
+                true -> {
+                    imageLike.visibility=View.VISIBLE
+                    imageDislike.visibility=View.GONE
+                }
+                else -> {
+                    imageLike.visibility=View.GONE
+                    imageDislike.visibility=View.VISIBLE
+                }
+            }
+
+        }
+    }
+    private fun applyRating(comment: Comment) {
+        //Requete
+        Log.d("PLS",comment.toString())
+        NetworkProvider.putComment(  comment = comment,listener = object: NetworkListener<Comment>{
+            override fun onSuccess(data: Comment) {
+                Log.d("Envoi",data.toString())
+
+            }
+
+            override fun onError(throwable: Throwable) {
+                Log.d("Envoi","Ko")
+            }
+
+        })/**/
     }
 }

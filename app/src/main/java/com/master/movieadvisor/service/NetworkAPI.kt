@@ -2,6 +2,7 @@ package com.master.movieadvisor.service
 
 
 import com.master.movieadvisor.model.Comment
+import com.master.movieadvisor.model.PostComment
 import com.master.movieadvisor.model.SignInModel
 import com.master.movieadvisor.service.dto.*
 import retrofit2.Call
@@ -20,9 +21,9 @@ interface NetworkAPI {
     @GET("/opinion/user/{id}")
     fun getCommentsByUser(@Path("id") id:String):Call<List<CommentDTO>>
     @POST("/opinion/add")
-    fun postComment(@Body comment: Comment): Call<CommentDTO>
-    @DELETE("comment/{id}")
-    fun removeComment(@Path("id") idComment: Int): Call<CommentDTO>
-    @PUT("comment/{id}")
+    fun postComment(@Body comment: PostComment): Call<String>
+    @DELETE("/opinion/{id}")
+    fun removeComment(@Path("id") idComment: Int): Call<String>
+    @PUT("/opinion/{id}")
     fun updateComment(@Body comment: Comment,@Path("id") idComment: Int): Call<CommentDTO>
 }

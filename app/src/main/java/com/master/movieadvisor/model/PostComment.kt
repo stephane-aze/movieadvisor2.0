@@ -3,8 +3,7 @@ package com.master.movieadvisor.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Comment (
-    val id: Int,
+data class PostComment (
     val userId: String,
     val comment: String,
     val movieId: Int,

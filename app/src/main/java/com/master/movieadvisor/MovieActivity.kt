@@ -9,24 +9,40 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.master.movieadvisor.fragments.MessengerFragment
 import com.master.movieadvisor.model.Comment
+import com.master.movieadvisor.model.MessagesViewModel
+import com.master.movieadvisor.model.PostComment
 import com.master.movieadvisor.service.providers.NetworkListener
 import com.master.movieadvisor.service.providers.NetworkProvider
 import com.master.movieadvisor.ui.makeStatusBarTransparent
 import kotlinx.android.synthetic.main.activity_movie.*
+import kotlinx.android.synthetic.main.activity_movie.listMessageView
+import kotlinx.android.synthetic.main.fragment_message.*
 
 
 class MovieActivity:  AppCompatActivity()  {
-    private var mTitleView: TextView? = null
-    private var mDescriptionView: TextView? = null
-    private var mButtonAddOpinion: Button? = null
-    private var mNoteView: TextView? = null
+    private lateinit var mTitleView: TextView
+    private lateinit var mDescriptionView: TextView
+    private lateinit var mButtonAddOpinion: Button
+    private lateinit var mNoteView: TextView
     private lateinit var commentView: EditText
     private lateinit var ratingBar: RatingBar
     private lateinit var imageLike: ImageView
     private lateinit var imageDislike: ImageView
+    private lateinit var listMessage: RecyclerView
+    private var enableStatusChangeListener: Boolean?=null
+    private val messagesAdapter by lazy { ListMessagesAdapter() }
+    private var movieId: Int? = null
+    private lateinit var auth: FirebaseAuth
+    private var currentUser: FirebaseUser? = null
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,33 +50,54 @@ class MovieActivity:  AppCompatActivity()  {
         makeStatusBarTransparent()
         setContentView(R.layout.activity_movie)
         val bundle = intent.extras
+        movieId=bundle!!.getInt("movieId")
+        auth = Firebase.auth
+        currentUser = auth.currentUser
+
         init()
         getParams(bundle)
         btn_create_opinion.setOnClickListener { openDialog() }
-        updateFragment(bundle)
+        //updateFragment(bundle)
     }
 
-    private fun updateFragment(bundle: Bundle?) {
-        val arguments = Bundle()
-        arguments.putInt("movieId", bundle?.getInt("movieId")!!)
+    override fun onResume() {
+        super.onResume()
+        currentUser?.let { user ->
+            movieId?.let { movieId ->
 
-        val messengerFragment =
-            MessengerFragment()
-        messengerFragment.arguments = arguments
-        supportFragmentManager.beginTransaction().add(
-            R.id.frame_fragment, messengerFragment
-        ).commit()
+                NetworkProvider.getOpinionsByMovie(idMovie = movieId, listener = object :
+                    NetworkListener<List<Comment>> {
+                    override fun onSuccess(data: List<Comment>) {
+                        enableStatusChangeListener =
+                            data.find { it.userId == user.uid }.let { false }
+                        val transformData = data.map { comment ->
 
+                            MessagesViewModel(
+                                userName = user.displayName?:"Me",
+                                rating = comment.rating,
+                                movieId = comment.movieId,
+                                text = comment.comment,
+                                isLiked = comment.like
+                            )
+                        }
+                        messagesAdapter.listItem = transformData as MutableList<MessagesViewModel>
+                    }
 
+                    override fun onError(throwable: Throwable) {
+                        Log.e("Error", throwable.localizedMessage)
+                    }
+
+                })
+            }
+        }
     }
-
     private fun getParams(bundle: Bundle?) {
         val title = bundle?.getString("title")
         val description = bundle?.getString("description")
         val note = bundle?.getString("vote")
-        mTitleView?.text = title
-        mDescriptionView?.text = description
-        mNoteView?.text = note
+        mTitleView.text = title
+        mDescriptionView.text = description
+        mNoteView.text = note
         init()
         val url = "https://image.tmdb.org/t/p/w500${bundle?.getString("path")}"
         Glide.with(this)
@@ -75,6 +112,9 @@ class MovieActivity:  AppCompatActivity()  {
         mDescriptionView = findViewById(R.id.movie_description)
         mNoteView = findViewById(R.id.movie_note)
         mButtonAddOpinion = findViewById(R.id.btn_create_opinion)
+        mButtonAddOpinion.isEnabled=enableStatusChangeListener?:true
+        listMessage=findViewById(R.id.listMessageView)
+        listMessage.adapter =messagesAdapter
 
 
     }
@@ -96,7 +136,9 @@ class MovieActivity:  AppCompatActivity()  {
             { _, _ ->
                 val comment = commentView.text.toString()
                 val rating = ratingBar.rating.toDouble()
-                applyRating(rating, comment)
+                val isliked=imageLike.visibility==View.VISIBLE
+                val newComment= PostComment(movieId = movieId!!,rating = rating,comment = comment,userId = currentUser!!.uid,like = isliked)
+                applyRating(newComment)
 
             }
             .setNegativeButton(R.string.cancel)
@@ -123,8 +165,19 @@ class MovieActivity:  AppCompatActivity()  {
         }
     }
 
-    private fun applyRating(rating: Double, comment: String) {
+    private fun applyRating(comment: PostComment) {
         //Requete
+        Log.d("PLS",comment.toString())
+        NetworkProvider.postComment(comment,listener = object: NetworkListener<String>{
+            override fun onSuccess(data: String) {
+                Log.d("Envoi","Ok")
+            }
+
+            override fun onError(throwable: Throwable) {
+                Log.d("Envoi","Ko")
+            }
+
+        })/**/
     }
 
 }

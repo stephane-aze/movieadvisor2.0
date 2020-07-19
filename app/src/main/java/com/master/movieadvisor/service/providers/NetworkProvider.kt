@@ -4,6 +4,7 @@ import android.util.Log
 import com.master.movieadvisor.model.Category
 import com.master.movieadvisor.model.Comment
 import com.master.movieadvisor.model.Movie
+import com.master.movieadvisor.model.PostComment
 import com.master.movieadvisor.service.NetworkAPI
 import com.master.movieadvisor.service.dto.CategoryDTO
 import com.master.movieadvisor.service.dto.CommentDTO
@@ -94,6 +95,7 @@ object NetworkProvider {
                 response: Response<List<CommentDTO>>
             ) {
                 val commentDto: List<CommentDTO>? = response.body()
+                Log.d("PSS",commentDto.toString())
                 commentDto?.let { notNullCommentDto ->
                     val comments: List<Comment> = CommentMapper().map(notNullCommentDto)
                     listener.onSuccess(comments)
@@ -115,7 +117,73 @@ object NetworkProvider {
                         listener.onSuccess(it)
                     }
                 }
-                Log.d("AZE","echec")
+
+            }
+
+
+        })
+    }
+    fun postComment(comment: PostComment,listener: NetworkListener<String>){
+        networkAPI.postComment(comment).enqueue(object : Callback<String>{
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                listener.onError(t)
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val responseString = response.body()
+                    responseString?.let {
+                        listener.onSuccess(it)
+                    }
+                }
+
+            }
+
+
+        })
+    }
+    fun putComment(comment: Comment,listener: NetworkListener<Comment>){
+        networkAPI.updateComment(idComment = comment.id,comment = comment).enqueue(object : Callback<CommentDTO>{
+
+
+            override fun onFailure(call: Call<CommentDTO>, t: Throwable) {
+                listener.onError(t)
+            }
+
+            override fun onResponse(call: Call<CommentDTO>, response: Response<CommentDTO>) {
+                val commentDto: CommentDTO? = response.body()
+                commentDto?.let {comment->
+                    with(comment){
+                        listener.onSuccess(
+                            Comment(
+                                id = id,
+                                userId = userId ?: "",
+                                comment = text ?: "",
+                                like = isLiked,
+                                rating = rating ?: 0.0,
+                                movieId = movieId
+                            )
+                        )
+                    }
+
+                } ?: listener.onError(Exception())
+
+            }
+
+
+        })
+    }
+    fun removeComment(comment: Comment,listener: NetworkListener<Comment>){
+        networkAPI.removeComment(idComment = comment.id).enqueue(object : Callback<String>{
+
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                listener.onError(t)
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+
+
             }
 
 

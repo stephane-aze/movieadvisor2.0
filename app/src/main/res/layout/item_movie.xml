@@ -10,21 +10,21 @@
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/title_movie_size_list"
             android:textStyle="bold"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/list_description"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/list_image"
+            app:layout_constraintStart_toEndOf="@+id/list_image"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -40,11 +40,11 @@
 
         <TextView
             android:id="@+id/list_description"
-            android:textColor="@android:color/white"
-
             android:layout_width="0dp"
+
             android:layout_height="wrap_content"
             android:maxLength="255"
+            android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/list_note"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -55,8 +55,8 @@
             android:layout_width="47dp"
             android:layout_height="30dp"
             android:maxLength="50"
-            android:textSize="@dimen/rating_size"
             android:textColor="@android:color/white"
+            android:textSize="@dimen/rating_size"
 
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
