@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#191970</color>
+    <color name="colorNavigationBar">#C45A628F</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="gradientPrimary">#191970</color>
+    <color name="gradientSecondary">#111210</color>
+    <color name="danger">#FF0000</color>
+    <color name="btnBlue">#1E88E5</color>
+    <color name="colorGreyTransparent">#77AAAAAA</color>
+    <color name="colorLikes">#FF0000</color>
+    <color name="background_black">#EE131313</color>
+    <color name="black_gradient">#D2302C2C</color>
+
+</resources>

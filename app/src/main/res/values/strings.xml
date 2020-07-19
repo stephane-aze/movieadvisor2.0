@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">MovieAdvisor</string>
+    <string name="intro">Bienvenue dans MovieAdvisor</string>
+    <string name="login">Se connecter</string>
+    <string name="d_connexion">Déconnexion</string>
+    <string name="register">S\'inscrire</string>
+    <string name="password">Mot de passe</string>
+    <string name="email">Email</string>
+    <string name="connexion">Connexion</string>
+    <string name="login_with">Se connecter avec</string>
+    <string name="menu_search">Recherche</string>
+    <string name="new_user">Nouveau Compte</string>
+    <string name="forgot_password">Mot de passe oublié?</string>
+    <string name="inscription">Inscription</string>
+    <string name="search">Recherche</string>
+    <string name="messages">Mes avis</string>
+    <!-- Facebook -->
+    <string name="facebook_app_id">668728520378293</string>
+    <string name="fb_login_protocol_scheme">fb668728520378293</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profiles">Profil</string>
+    <string name="repeat_password">Confirmation du mot de passe</string>
+    <string name="username">Nom</string>
+    <string name="google_login">Se connecter avec google</string>
+    <string name="movie_picture">Image du film</string>
+    <string name="films">Films</string>
+    <string name="cancel">Annuler</string>
+    <string name="send">Envoyer</string>
+    <string name="logo">Logo</string>
+    <string name="image_film">image_film</string>
+    <string name="give_opinion">Donner son avis</string>
+    <string name="title_commentaires">Commentaires</string>
+    <string name="title_category">Title</string>
+    <string name="thumbnail_title_movie">Titre</string>
+    <string name="title_fragment_category">Nos films par catégorie</string>
+    <string name="likes">Likes</string>
+    <string name="rating">Notes</string>
+    <string name="views">Vues</string>
+    <string name="profile_name">My name</string>
+    <string name="profile_email">My email</string>
+    <string name="years">Années</string>
+    <string name="profiles_sex">N/A</string>
+    <string name="simple_date_format">yyyyMMdd_HHmmss</string>
+    <string name="title_dialog_rating">Ajouter votre avis</string>
+    <string name="title_list_message">Vos messages</string>
+    <string name="text_message">message…</string>
+    <string name="avatar">avatar</string>
+    <string name="btn_edit_profile_dialog">Modifier</string>
+    <string name="description_edit_btn">Button modifier user</string>
+    <string name="sex">Sexe</string>
+    <string name="text_explain_forgot_password">Vous allez trouvé un lien par mail pour changer votre mot de passe</string>
+    <string name="valider">valider</string>
+    <string name="indicateur_like">Indicateur Like</string>
+    <string name="indicateur_dislike">Indicateur Dislike</string>
+    <string name="year">Année</string>
+    <string-array name="sex_profile">
+        <item>Sexe :</item>
+        <item>M.</item>
+        <item>Mme.</item>
+    </string-array>
+</resources>

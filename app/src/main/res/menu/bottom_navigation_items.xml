@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/item_bande_film"
+        android:icon="@drawable/icon_bande_film"
+        android:state_pressed="true"
+        android:title="@string/films" />
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search"
+     />
+    <item
+        android:id="@+id/messages"
+        android:icon="@android:drawable/stat_notify_chat"
+        android:title="@string/messages" />
+    <item
+        android:id="@+id/profiles"
+        android:icon="@drawable/icon_user"
+        android:title="@string/profiles" />
+
+</menu>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "289917484736",
+    "firebase_url": "https://movieadvisor2-e7939.firebaseio.com",
+    "project_id": "movieadvisor2-e7939",
+    "storage_bucket": "movieadvisor2-e7939.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289917484736:android:b0181d13d035a6bfa5b725",
+        "android_client_info": {
+          "package_name": "com.master.movieadvisor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289917484736-n2vidicikle1pst898bldetid1kvtbnm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.master.movieadvisor",
+            "certificate_hash": "d54376f912edb3c16d38afdcd6f353deae06ebb4"
+          }
+        },
+        {
+          "client_id": "289917484736-hu30ad92v92tf9h4hedla2fegc41jcmt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyKY7tb2qIxEhO-H7IN04LWlpNzgbolwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289917484736-hu30ad92v92tf9h4hedla2fegc41jcmt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

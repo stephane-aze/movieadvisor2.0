@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="background">@color/black_gradient</item>
+        <item name="colorBackgroundFloating">@color/black_gradient</item>
+    </style>
+    <style name="ThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@drawable/background_no_bar</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="customRatingBar"
+        parent="Widget.AppCompat.RatingBar.Small">
+    </style>
+    <style name="AppTheme.TransparentTheme">
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+    </style>
+    <style name="btn_filter" parent="Theme.MaterialComponents.Light">
+    </style>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorGreyTransparent</item>
+    </style>
+
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+
+    </style>
+
+</resources>
