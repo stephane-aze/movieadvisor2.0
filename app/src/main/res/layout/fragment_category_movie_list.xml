@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CategoryMovieFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/listMovieByCategoryView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/listMovieByCategoryView"
+        app:layout_constraintTop_toTopOf="@+id/title_fragment_category" />
 
     <TextView
         android:id="@+id/title_fragment_category"
@@ -19,7 +28,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listMovieByCategoryView"

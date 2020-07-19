@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import com.facebook.internal.Mutable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -30,6 +31,8 @@ class CategoryMovieFragment : Fragment() {
     private var listMovies: List<Movie> = emptyList()
     private var listMoviesByCategory: MutableList<MovieByCategory> = mutableListOf()
     private val movieByCategoryAdapter by lazy { MoviesByCategoryAdapter(context!!) }
+    private lateinit var mProgressBar: ProgressBar
+
     override fun onResume() {
         super.onResume()
         getCategories()
@@ -47,10 +50,12 @@ class CategoryMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_category_movie_list, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mProgressBar = view.findViewById(R.id.progress_bar2)
 
         listMovieByCategoryView.apply {
                 adapter=movieByCategoryAdapter
@@ -58,6 +63,7 @@ class CategoryMovieFragment : Fragment() {
         }
     }
     private fun getCategories(){
+        showSimpleProgressDialog()
         NetworkProvider.getCategories(listener = object : NetworkListener<List<Category>>{
             override fun onSuccess(data: List<Category>) {
                 listCategory=data
@@ -70,6 +76,16 @@ class CategoryMovieFragment : Fragment() {
 
         })
 
+    }
+    private fun showSimpleProgressDialog() {
+        val visibility = if (mProgressBar.visibility == View.GONE) View.VISIBLE else View.GONE
+        mProgressBar.visibility = visibility
+    }
+
+    private fun removeSimpleProgressDialog() {
+        if (mProgressBar.visibility==View.VISIBLE) {
+            mProgressBar.visibility=View.GONE
+        }
     }
     private fun getMovies() {
 
@@ -104,6 +120,7 @@ class CategoryMovieFragment : Fragment() {
                 )
             }
         }
+        removeSimpleProgressDialog()
         movieByCategoryAdapter.listItemByCategory=listMoviesByCategory
     }
 }
