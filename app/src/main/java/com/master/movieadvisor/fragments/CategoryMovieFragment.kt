@@ -34,16 +34,6 @@ class CategoryMovieFragment : Fragment() {
         super.onResume()
         getCategories()
         getMovies()
-        NetworkProvider.signIn(SignInDTO(userIdAndroid = "aLii4CUvP8OvpQepLCEx0SdCpQb2",username = "Assali Antoine"),object : NetworkListener<String>{
-            override fun onSuccess(data: String) {
-                Log.d("OKI", "Okkkkkkk")
-            }
-
-            override fun onError(throwable: Throwable) {
-                Log.e("Error", throwable.localizedMessage)
-            }
-
-        })
 
 
     }
