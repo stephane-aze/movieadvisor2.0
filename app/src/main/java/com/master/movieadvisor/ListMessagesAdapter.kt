@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.master.movieadvisor.model.MessagesViewModel
 
+
 class ListMessagesAdapter: RecyclerView.Adapter<MessagesViewHolder>() {
     var messageListener: ((MessagesViewModel) -> Unit)? = null
     var listItem: MutableList<MessagesViewModel> = mutableListOf()
