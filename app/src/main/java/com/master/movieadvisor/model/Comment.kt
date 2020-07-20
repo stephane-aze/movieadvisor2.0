@@ -8,7 +8,7 @@ data class Comment (
     val userId: String,
     val comment: String,
     val movieId: Int,
-    @SerializedName("note") val rating: Double,
-    @SerializedName("isLiked") val like: Boolean
+    val note: Double,
+    val isLiked: Boolean
     //val dateTime: LocalDateTime?
 )

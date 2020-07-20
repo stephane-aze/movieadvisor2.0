@@ -10,6 +10,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface NetworkAPI {
+    @Headers("Content-Type: application/json")
     @POST("/user/add")
     fun signIn(@Body info: SignInDTO): Call<String>
     @GET("movie/all")
@@ -20,10 +21,12 @@ interface NetworkAPI {
     fun getCommentsByMovie(@Path("id") id:Int):Call<List<CommentDTO>>
     @GET("/opinion/user/{id}")
     fun getCommentsByUser(@Path("id") id:String):Call<List<CommentDTO>>
+    @Headers("Content-Type: application/json")
     @POST("/opinion/add")
-    fun postComment(@Body comment: PostComment): Call<String>
+    fun postComment(@Body comment: PostComment): Call<CommentDTO>
     @DELETE("/opinion/{id}")
-    fun removeComment(@Path("id") idComment: Int): Call<String>
+    fun removeComment(@Path("id") id: Int): Call<String>
+    @Headers("Content-Type: application/json")
     @PUT("/opinion/{id}")
-    fun updateComment(@Body comment: Comment,@Path("id") idComment: Int): Call<CommentDTO>
+    fun updateComment(@Body comment: Comment,@Path("id") id: Int): Call<CommentDTO>
 }

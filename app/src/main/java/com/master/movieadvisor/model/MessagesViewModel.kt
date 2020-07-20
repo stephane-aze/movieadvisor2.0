@@ -8,5 +8,6 @@ data class MessagesViewModel(
     val text: String,
     val isLiked: Boolean,
     //val datetime: String,
-    val movieId: Int
+    val movieId: Int,
+    val id: Int
 )

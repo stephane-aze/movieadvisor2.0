@@ -9,7 +9,7 @@ class CommentMapper {
 
     private fun mapComment(commentDTO: CommentDTO): Comment {
         return with(commentDTO){
-            Comment(id = id,userId = userId ?:"",comment = text?:"", like = isLiked,rating = rating?:0.0,movieId = movieId)
+            Comment(id = id,userId = userId ?:"",comment = text?:"", isLiked = isLiked,note = rating?:0.0,movieId = movieId)
         }
     }
 }

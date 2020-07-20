@@ -115,6 +115,7 @@ class SearchFragment : Fragment() {
                 R.id.selected_view -> sortBy(1)
                 R.id.selected_rating -> sortBy(2)
                 R.id.selected_likes -> sortBy(3)
+                R.id.selected_comment -> sortBy(4)
                 else -> {
                     searchAdapter.listItem=searchAdapter.listItem.sortedBy { it.title }
                 }
@@ -128,7 +129,8 @@ class SearchFragment : Fragment() {
             when(indicator){
                 1->  it.popularity
                 2->  it.voteAverage
-                else -> it.averageLikes
+                3 -> it.averageLikes
+                else -> it.averageCommentNote
             }
         }
 
@@ -164,7 +166,7 @@ class SearchFragment : Fragment() {
         startActivity(intent)
     }
     private fun search(s: String?) {
-        searchAdapter.listItem=searchAdapter.listItem.filter {
+        searchAdapter.listItem=listMovies.filter {
             it.title.toLowerCase(
                 Locale.ROOT).contains(s!!.toLowerCase(
                 Locale.ROOT))
@@ -174,7 +176,7 @@ class SearchFragment : Fragment() {
     }
     private fun searchByYears(s: String) {
         if(s.isNotBlank()){
-            searchAdapter.listItem=listMovies.filter {
+            searchAdapter.listItem=searchAdapter.listItem.filter {
                 it.releaseDate.contains(s)
             }
 

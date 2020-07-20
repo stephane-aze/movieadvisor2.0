@@ -123,19 +123,29 @@ object NetworkProvider {
 
         })
     }
-    fun postComment(comment: PostComment,listener: NetworkListener<String>){
-        networkAPI.postComment(comment).enqueue(object : Callback<String>{
-            override fun onFailure(call: Call<String>, t: Throwable) {
+    fun postComment(comment: PostComment,listener: NetworkListener<Comment>){
+        networkAPI.postComment(comment).enqueue(object : Callback<CommentDTO>{
+            override fun onFailure(call: Call<CommentDTO>, t: Throwable) {
                 listener.onError(t)
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                if (response.isSuccessful) {
-                    val responseString = response.body()
-                    responseString?.let {
-                        listener.onSuccess(it)
+            override fun onResponse(call: Call<CommentDTO>, response: Response<CommentDTO>) {
+                val commentDto: CommentDTO? = response.body()
+                commentDto?.let {comment->
+                    with(comment){
+                        listener.onSuccess(
+                            Comment(
+                                id = id,
+                                userId = userId ?: "",
+                                comment = text ?: "",
+                                isLiked = isLiked,
+                                note = rating ?: 0.0,
+                                movieId = movieId
+                            )
+                        )
                     }
-                }
+
+                } ?: listener.onError(Exception())
 
             }
 
@@ -143,7 +153,7 @@ object NetworkProvider {
         })
     }
     fun putComment(comment: Comment,listener: NetworkListener<Comment>){
-        networkAPI.updateComment(idComment = comment.id,comment = comment).enqueue(object : Callback<CommentDTO>{
+        networkAPI.updateComment(comment = comment,id = comment.id).enqueue(object : Callback<CommentDTO>{
 
 
             override fun onFailure(call: Call<CommentDTO>, t: Throwable) {
@@ -159,8 +169,8 @@ object NetworkProvider {
                                 id = id,
                                 userId = userId ?: "",
                                 comment = text ?: "",
-                                like = isLiked,
-                                rating = rating ?: 0.0,
+                                isLiked = isLiked,
+                                note = rating ?: 0.0,
                                 movieId = movieId
                             )
                         )
@@ -173,8 +183,8 @@ object NetworkProvider {
 
         })
     }
-    fun removeComment(comment: Comment,listener: NetworkListener<Comment>){
-        networkAPI.removeComment(idComment = comment.id).enqueue(object : Callback<String>{
+    fun removeComment(idComment: Int,listener: NetworkListener<String>){
+        networkAPI.removeComment(id = idComment).enqueue(object : Callback<String>{
 
 
             override fun onFailure(call: Call<String>, t: Throwable) {
@@ -182,7 +192,7 @@ object NetworkProvider {
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
-
+                listener.onSuccess("Ok")
 
             }
 

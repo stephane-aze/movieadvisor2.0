@@ -227,7 +227,6 @@ class ProfilesFragment: Fragment() {
     }
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        Log.d("hello","Hey!!!!")
         // Create an image file name
         val timeStamp: String = SimpleDateFormat(getString(R.string.simple_date_format)).format(Date())
         return File.createTempFile(
